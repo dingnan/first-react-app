@@ -1,19 +1,43 @@
 import React, { Component } from "react";
 import "whatwg-fetch";
+import SeriesList from "../../components/SeriesList";
+import Loader from "../../components/Loader";
 
 class Series extends Component {
   state = {
     series: [],
+    seriesName: "",
+    isFetching: false,
   };
 
-  componentDidMount() {
-    fetch("http://api.tvmaze.com/search/shows?q=Vikings")
+  onSeriesInputChange = (e) => {
+    this.setState({ seriesName: e.target.value, isFetching: true });
+    fetch(`http://api.tvmaze.com/search/shows?q=${e.target.value}`)
       .then((response) => response.json())
-      .then((json) => this.setState({ series: json }));
-  }
+      .then((json) => this.setState({ series: json, isFetching: false }));
+  };
+
   render() {
-    console.log("render", this.state);
-    return <div>Series container</div>;
+    const { series, seriesName, isFetching } = this.state;
+    return (
+      <div>
+        <div>
+          <input
+            value={seriesName}
+            type="text"
+            onChange={this.onSeriesInputChange}
+          />
+        </div>
+        {!isFetching && series.length === 0 && seriesName.trim() === "" && (
+          <p>Please enter series name into the input</p>
+        )}
+        {!isFetching && series.length === 0 && seriesName.trim() !== "" && (
+          <p>No TV series have been found with this name</p>
+        )}
+        {isFetching && <Loader />}
+        {!isFetching && <SeriesList List={this.state.series} />}
+      </div>
+    );
   }
 }
 
