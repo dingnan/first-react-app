@@ -3,6 +3,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 following this udemy course
 https://www.udemy.com/course/react-fundamentals/
 
+try enter Vikings, Game of Thrones
+
 ## Available Scripts
 
 In the project directory, you can run:
