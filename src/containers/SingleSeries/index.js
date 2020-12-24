@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Loader from "../../components/Loader";
+import Show from "../../components/Show";
 
 class SingleSeries extends Component {
   state = {
@@ -15,23 +15,7 @@ class SingleSeries extends Component {
 
   render() {
     const { show } = this.state;
-    console.log(show);
-    return (
-      <div>
-        {show === null && <Loader />}
-        {show !== null && (
-          <div>
-            <p>{show.name}</p>
-            <p>Premiered - {show.premiered}</p>
-            <p>Rating - {show.rating.average}</p>
-            <p>Episodes - {show._embedded.episodes.length}</p>
-            <p>
-              <img alt="Show" src={show.image.medium} />
-            </p>
-          </div>
-        )}
-      </div>
-    );
+    return <Show detail={show} />;
   }
 }
 
